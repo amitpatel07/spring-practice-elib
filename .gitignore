@@ -1,3 +1,14 @@
+*.prefs
+*.metadata
+*.settings
+/.metadata
+/.settings
+/.classpath
+*/target/*
+
+*.project
+*.classpath
+*common.component
 # Compiled class file
 *.class
 
