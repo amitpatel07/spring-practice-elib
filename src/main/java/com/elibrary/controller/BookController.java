@@ -67,4 +67,10 @@ public class BookController {
 			@RequestParam Integer bookId) {
 		return bookservice.updateBookPdf(file, bookId);
 	}
+	
+	@PostMapping(path = "/uploadBookImg", consumes = "multipart/form-data")
+	public @ResponseBody Response uploadBookImg(@RequestPart(name = "image") MultipartFile image,
+			@RequestParam Integer bookId) {
+		return bookservice.updateBookImg(image, bookId);
+	}
 }

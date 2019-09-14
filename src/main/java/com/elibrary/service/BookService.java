@@ -101,4 +101,29 @@ public class BookService {
 
 	}
 
+	@Transactional
+	public Response updateBookImg(MultipartFile image, Integer bookId) {
+		String status = null;
+		String message = "failure";
+		Book book = bookrepository.getBookByID(bookId);
+		if (book != null) {
+			String path = "/bookImage/uploadedImage/" + System.currentTimeMillis() + "__" + image.getOriginalFilename();
+			File destination = new File(path);
+			try {
+				image.transferTo(destination);
+				book.setImagepath(path);
+				bookrepository.addbook(book);
+				status = "success";
+				message = "Image Uploaded";
+			} catch (Exception e) {
+				message = "Error saving file : " + e.getMessage();
+				LOGGER.error(message, e);
+
+			}
+
+		}
+		return new Response(message, status);
+
+	}
+
 }
