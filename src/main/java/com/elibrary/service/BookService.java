@@ -2,9 +2,12 @@ package com.elibrary.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,6 +106,8 @@ public class BookService {
 
 	@Transactional
 	public Response updateBookImg(MultipartFile image, Integer bookId) {
+		// logger
+		LOGGER.info("update image accessed at :: "+new Date());
 		String status = null;
 		String message = "failure";
 		Book book = bookrepository.getBookByID(bookId);
@@ -123,6 +128,28 @@ public class BookService {
 
 		}
 		return new Response(message, status);
+
+	}
+
+	public void downloadBookImage(HttpServletResponse response, Integer bookId) {
+		if (bookId != null) {
+			Book book = bookrepository.getBookByID(bookId);
+			String path = book.getImagepath();
+			File file = new File(path);
+			DownloadHandler.downloadFile(response, file);
+
+		}
+
+	}
+
+	public void downloadBookPdf(HttpServletResponse response, Integer bookId) {
+		if (bookId != null) {
+			Book book = bookrepository.getBookByID(bookId);
+			String path = book.getStoragepath();
+			File file = new File(path);
+			DownloadHandler.downloadFile(response, file);
+
+		}
 
 	}
 

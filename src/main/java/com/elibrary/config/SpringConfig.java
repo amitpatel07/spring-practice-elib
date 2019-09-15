@@ -2,10 +2,12 @@ package com.elibrary.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.EnableLoadTimeWeaving;
+import org.springframework.context.annotation.EnableLoadTimeWeaving.AspectJWeaving;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.multipart.MultipartResolver;
@@ -17,6 +19,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
+@EnableAspectJAutoProxy(proxyTargetClass = true)
+@EnableLoadTimeWeaving(aspectjWeaving = AspectJWeaving.AUTODETECT)
 @ComponentScan(basePackages = "com.elibrary")
 public class SpringConfig implements WebMvcConfigurer {
 

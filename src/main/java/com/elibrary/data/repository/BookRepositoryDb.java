@@ -20,6 +20,8 @@ public class BookRepositoryDb implements BookRepository {
 	@PersistenceContext(unitName = "entityManager")
 	private EntityManager entityManager;
 
+	// JPQL - JPA Query Language / HQL - Hibernate Query Language
+	
 	@Override
 	public Book getBookByID(Integer id) {
 		Book book = null;

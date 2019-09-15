@@ -49,14 +49,16 @@ public class PersistenceConfig {
 		dataSource.setPassword(dbPassword);
 		return dataSource;
 	}
-    @Bean
+
+	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManager() {
 		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
 		factory.setDataSource(datasource());
 		factory.setPersistenceProviderClass(HibernatePersistenceProvider.class);
 		factory.setPackagesToScan("com.elibrary.data.model");
 
-		//
+		// dialect is the class responsible to convert hql/jpql to actual database
+		// specific queries
 		Properties jpaProperties = new Properties();
 		jpaProperties.put(Environment.DIALECT, dialect);
 		jpaProperties.put(Environment.GENERATE_STATISTICS, true);
@@ -72,11 +74,11 @@ public class PersistenceConfig {
 
 		return factory;
 	}
-    
-    @Bean
-    public JpaTransactionManager transactionManager() {
-    	JpaTransactionManager transactionManager = new JpaTransactionManager();
-    	transactionManager.setEntityManagerFactory(entityManager().getObject());
-    	return transactionManager ;
-    }
+
+	@Bean
+	public JpaTransactionManager transactionManager() {
+		JpaTransactionManager transactionManager = new JpaTransactionManager();
+		transactionManager.setEntityManagerFactory(entityManager().getObject());
+		return transactionManager;
+	}
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -67,10 +68,21 @@ public class BookController {
 			@RequestParam Integer bookId) {
 		return bookservice.updateBookPdf(file, bookId);
 	}
-	
+
 	@PostMapping(path = "/uploadBookImg", consumes = "multipart/form-data")
 	public @ResponseBody Response uploadBookImg(@RequestPart(name = "image") MultipartFile image,
 			@RequestParam Integer bookId) {
 		return bookservice.updateBookImg(image, bookId);
 	}
+
+	@GetMapping(path="/downloadBookImage")
+	public void downloadBookImage(HttpServletResponse response, @RequestParam Integer bookId) {
+		bookservice.downloadBookImage(response, bookId);
+	}
+	
+	@GetMapping(path="/downloadBookPdf")
+	public void downloadBookPdf(HttpServletResponse response, @RequestParam Integer bookId) {
+		bookservice.downloadBookPdf(response, bookId);
+	}
+
 }
